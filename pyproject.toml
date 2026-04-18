@@ -1,0 +1,14 @@
+[project]
+name = "company-insight-bot"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "chromadb>=1.5.8",
+    "ollama>=0.6.1",
+    "pymupdf>=1.27.2.2",
+    "python-dotenv>=1.2.2",
+    "sentence-transformers>=5.4.1",
+    "streamlit>=1.56.0",
+]
