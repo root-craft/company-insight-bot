@@ -88,6 +88,23 @@ with st.sidebar:
             st.session_state["messages"] = []
             st.rerun()
 
+    # ── System info ───────────────────────────────────────
+    st.divider()
+    st.markdown("### ⚙️ System Info")
+
+    st.markdown(
+        f"""
+    | Setting | Value |
+    |---|---|
+    | Embedding model | `{Config.EMBEDDING_MODEL}` |
+    | LLM | `{Config.OLLAMA_MODEL}` |
+    | Chunk size | `{Config.CHUNK_SIZE}` chars |
+    | Chunk overlap | `{Config.CHUNK_OVERLAP}` chars |
+    | Top-K retrieval | `{Config.TOP_K}` chunks |
+    | Min score | `{Config.MIN_SCORE}` |
+    """
+    )
+
 
 # ── Main chat area ────────────────────────────────────────
 if not st.session_state["indexed"]:
