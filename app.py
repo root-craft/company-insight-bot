@@ -56,3 +56,35 @@ if "messages" not in st.session_state:
 
 if "indexed" not in st.session_state:
     st.session_state["indexed"] = False    # whether PDFs have been ingested
+
+# ── Sidebar ───────────────────────────────────────────────
+with st.sidebar:
+    st.header("📂 Load Company Documents")
+    st.caption("Point to a PDF file or a folder containing PDFs.")
+
+    source_path = st.text_input(
+        "PDF file or folder path",
+        value=Config.PDF_SOURCE_DIR
+    )
+
+    if st.button("Index Documents", use_container_width=True):
+        with st.spinner("Loading, chunking, embedding... please wait."):
+            result = ingestion_pipeline.run(source_path)
+
+        if result["status"] == "success":
+            st.success(
+                f"✅ Indexed {result['documents_loaded']} document(s), "
+                f"{result['chunks_created']} chunks."
+            )
+            st.session_state["indexed"] = True
+            st.session_state["messages"] = []  # clear chat on re-index
+        else:
+            st.error(f"❌ {result['message']}")
+
+    if st.session_state["indexed"]:
+        st.divider()
+        st.success("Documents loaded. Ask away!")
+
+        if st.button("Clear chat history", use_container_width=True):
+            st.session_state["messages"] = []
+            st.rerun()
